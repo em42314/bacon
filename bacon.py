@@ -4,6 +4,7 @@ from MySQLdb import connect
 import requests
 import re
 import string
+import sys
 
 
 URL = 'https://www.imdb.com/name/nm000000'
@@ -19,7 +20,11 @@ def initDBConnection(host, user, pw, dbname):
     return connect(host, user, pw, dbname)
 
 def getActor(htmlTree):
-    td = htmlTree.xpath('//td[@id="overview-top"]/*/span[@class="itemprop"]')
+    #td = htmlTree.xpath('//td[@id="overview-top"]/*/span[@class="itemprop"]')
+    td = htmlTree.xpath('//td[@id="overview-top"]//span[@class="itemprop"]')
+    #span = td.xpath('.//span[@class="itemprop"]')
+    #print(span[0].text)
+    #sys.exit(0)
     #td = htmlTree.xpath('//td[@id="overview-top"]/*/span')
     #print("actors name is: "+td[0].text)
     return td[0].text
@@ -52,7 +57,7 @@ def getMovieTitles(htmlTree):
 
 orig_url = URL
 
-for i in range(785,1000):
+for i in range(0,100000):
 
     URL = orig_url+str(i+1)
 
